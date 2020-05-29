@@ -88,15 +88,15 @@ u8 DutyFlag;
 
 
 #define UART1_RX_BUFF_SIZE   32   		
-#define UART1_TX_BUFF_SIZE   32   	
+//#define UART1_TX_BUFF_SIZE   32   	
 char acRecvBuf[UART1_RX_BUFF_SIZE]={0};
 xdata u8 RcvBuf[UART1_RX_BUFF_SIZE];
 u8 Uart1RxIn =0;
-u8 Uart1RxOut =0;
-xdata u8 TxBuf[UART1_TX_BUFF_SIZE];
-u8 Uart1TxIn =0;
-u8 Uart1TxOut =0;
-bit bUart1TxFlag=0;
+//u8 Uart1RxOut =0;
+//xdata u8 TxBuf[UART1_TX_BUFF_SIZE];
+//u8 Uart1TxIn =0;
+//u8 Uart1TxOut =0;
+//bit bUart1TxFlag=0;
 
 u8 LedTime;
 
@@ -105,7 +105,9 @@ u8 LedTime;
 //-------------------------------------------
 
 
-void s_pwm_duty(char* para);
+void s_pwm(char* para);
+void Uart1SendStr(u8* PStr);
+void DelayXus(u8 xUs);
 
 
 
@@ -132,19 +134,19 @@ u8 gB_dummy =0 ;
 
 void sendOK(void)
 {
-	printf("OK\r\n");	 
+	Uart1SendStr("OK\r\n");	 
 
 }
 void sendERR(void){ // para error
-	printf("ERR\r\n");	 
+	Uart1SendStr("ERR\r\n");	 
 
 }
 void sendEmpty(void){
-	printf("\r\n");	 
+	Uart1SendStr("\r\n");	 
 
 }
 
-void s_pwm_duty(char* para)
+void s_pwm(char* para)
 {
 	UNUSED(para);//= NULL;
     sendOK();
@@ -154,8 +156,7 @@ void s_pwm_duty(char* para)
 const struct command commands[] = {
 
 
-  {"s_pwm_duty", s_pwm_duty, "s_pwm_duty \r\n"},
-
+  {"s_pwm", s_pwm, "s_pwm \r\n"},
 
 
    {NULL, NULL, NULL}
@@ -295,7 +296,8 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 {
 	_push_(SFRPI);		   
 
-	SFR_Page_(1);		  
+	SFR_Page_(1);	
+	/*
 	if(TI1)					
 	{
 	   TI1 = 0;	   
@@ -314,6 +316,7 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 			}
 		}
 	}
+	*/
 	if(RI1)					
 	{
 		
@@ -358,16 +361,17 @@ void InitUart1(void)
 
 	UART1_EnS1BRG();										// Enable S1BRG
 	UART1_SetBaudRateX2();									// S1BRG x2
-UART1_SetRxTxP10P11();	//UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
+    UART1_SetRxTxP10P11();	//UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
 	UART1_EnReception();									// Enable reception
 	UART1_SetS1BRGSelSYSCLK();								// S1BRG clock source£ºSYSCLK
 
 	// Sets B.R. value
-	UART1_SetS1BRGValue(S1BRG_BRGRL_9600_2X_12000000_1T);	
+	UART1_SetS1BRGValue(S1BRG_BRGRL_9600_2X_32000000_1T);	
 }
 
 void Uart1SendByte(u8 tByte)
 {
+#if 0
 	u8 i;
 	
 	if(bUart1TxFlag==FALSE)
@@ -395,6 +399,35 @@ void Uart1SendByte(u8 tByte)
 		Uart1TxIn=i;
 		INT_EnUART1();
 	}
+#else
+
+WORD usTimeOut = 1800;
+
+// Disable Serial Port IRQ
+INT_DisUART1();//ES = _DISABLE;
+
+// Clear Flag
+//TI = 0;
+  SFR_Page_(1);
+     TI1=0;
+  SFR_Page_(0);
+
+// Load Data to Serial Port Buffer
+S1BUF = tByte;
+
+do
+{
+	DelayXus(5);
+}
+while((TI1 == 0) && (--usTimeOut != 0));
+
+// Enable Serial Port IRQ
+INT_EnUART1();//ES = _ENABLE;
+
+//return ((TI != 0) && (usTimeOut != 0)) ? _TRUE : _FALSE;
+
+	
+#endif	
 }
 
 
@@ -405,7 +438,7 @@ Description:	Uart1 send string
 Input: 			u8* PStr:the string to be send
 Output:     
 *************************************************************************************/
-/*
+
 void Uart1SendStr(u8* PStr)
 {
 
@@ -415,13 +448,6 @@ void Uart1SendStr(u8* PStr)
 		PStr ++;
 	}
 	
-}
-*/
-char putchar (char c)  {
-
-
-  Uart1SendByte((BYTE)c);
-  return 0;
 }
 
 
@@ -447,14 +473,15 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 		{
 			duty.W=PCA_C-wDuty[0].W;
 			PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
+			PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
 			duty.W=PCA_C-wDuty[1].W;
 			PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
+				PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
 			bDutyChange=FALSE;
 		}
 	}
 	_pop_(SFRPI);
 }
-
 
 /*************************************************
 Function:     	void DelayXus(u16 xUs)
@@ -537,9 +564,10 @@ Output:
 *************************************************************************************/
 void InitPort(void)
 {
-	PORT_SetP1PushPull(BIT7);						// set P17(CEX4) as push-pull for PWM output
-	PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
-	PORT_SetP3PushPull(BIT3|BIT4|BIT5);				// set P33(CEX1),P34(CEX3),P35(CEX5) as push-pull for PWM output
+	PORT_SetP1PushPull(BIT6|BIT7);						// set P17(CEX4) as push-pull for PWM output
+	//PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
+	PORT_SetP3QuasiBi(BIT0|BIT1|BIT3|BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
+
 	PORT_SetP6PushPull(BIT0|BIT1);					// set P60(PWM6),P61(PWM7) as push-pull for PWM output
 }
 
@@ -555,12 +583,15 @@ void InitPCA_PWM(void)
 	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
 	
 	PCA_CH0_SetMode_PWM();
-	PCA_CH1_SetMode_PWM();
+	//PCA_CH1_SetMode_PWM();
 	PCA_CH2_SetMode_PWM();
+	//PCA_CH3_SetMode_PWM();
 
 	PCA_CH0_SetPWM_16Bit();
-	PCA_CH1_SetPWM_16Bit();
+	//PCA_CH1_SetPWM_16Bit();
 	PCA_CH2_SetPWM_16Bit();
+	//PCA_CH3_SetPWM_16Bit();
+
 
 
 	PCA_SetPWM_EdgeAligned();			// Edge-aligned
@@ -570,8 +601,9 @@ void InitPCA_PWM(void)
 
 	// Set PWM duty
 	PCA_CH0_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
-	PCA_CH1_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
+	//PCA_CH1_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
 	PCA_CH2_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
+	//PCA_CH3_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
 
 	// Enable PWM output
 	//PCA_SetPWM0_EnOutput();					
@@ -751,7 +783,7 @@ void InitSystem(void)
 
 void main()
 {
-//	u8 i,x;
+	u8 i,x;
 	
     InitSystem();
 
@@ -760,14 +792,18 @@ void main()
 	LED_G_1=1;LED_R=1;
 	
 	INT_EnAll();						// Enable global interrupt
+
+	Uart1SendStr("power on init ....\r\n");
+
+	wDuty[0].W=PWM_MIN;
+	wDuty[1].W=PWM_LOW;
+	DutyFlag=0x00;
+
 	
-//	wDuty[0].W=PWM_MIN;
-//	wDuty[1].W=PWM_LOW;
-//	DutyFlag=0x00;
 	while(1)
     {
 
-#if 0
+#if 1
 	
     	DelayXms(200);
     	LED_G_1=!LED_G_1;
@@ -798,7 +834,7 @@ void main()
 			x=x<<1;
     	}
     	bDutyChange=TRUE;
-#else
+//#else
 
    UartHandler();
 
