@@ -1,3 +1,16 @@
----- INT_PCA Matches (2 in 1 files) ----
-Main.c (code):Function:   void INT_PCA(void)
-Main.c (code):void INT_PCA(void) interrupt INT_VECTOR_PCA
+---- MCU_CPUCLK Matches (15 in 1 files) ----
+Main.c (code):#define MCU_CPUCLK		(MCU_SYSCLK)
+Main.c (code)://#define MCU_CPUCLK		(MCU_SYSCLK/2)
+Main.c (code):#if (MCU_CPUCLK>=11059200)
+Main.c (code):#if (MCU_CPUCLK>=14745600)
+Main.c (code):#if (MCU_CPUCLK>=16000000)
+Main.c (code):#if (MCU_CPUCLK>=22118400)
+Main.c (code):#if (MCU_CPUCLK>=24000000)
+Main.c (code):#if (MCU_CPUCLK>=29491200)
+Main.c (code):#if (MCU_CPUCLK>=32000000)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)
+Main.c (code):#if (MCU_CPUCLK==MCU_SYSCLK)

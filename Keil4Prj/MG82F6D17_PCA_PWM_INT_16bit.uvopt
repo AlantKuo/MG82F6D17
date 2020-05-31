@@ -186,10 +186,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>22</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>438</TopLine>
-      <CurrentLine>438</CurrentLine>
+      <TopLine>412</TopLine>
+      <CurrentLine>412</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\code\MAIN.C</PathWithFileName>
       <FilenameWithoutPath>MAIN.C</FilenameWithoutPath>
@@ -197,7 +197,7 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\kuo\Desktop\git project\MG82F6D17\CODE\INCLUDE\API_MACRO_MG82F6D17.H</PathWithFilename>
+    <PathWithFilename>D:\git project\MG82F6D17\CODE\INCLUDE\API_MACRO_MG82F6D17.H</PathWithFilename>
     <TopLine>1619</TopLine>
     <CurrentLine>1619</CurrentLine>
     <Constant>0</Constant>
@@ -223,7 +223,7 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>C:\Users\kuo\Desktop\git project\MG82F6D17\CODE\INCLUDE\API_UART_BRGRL_MG82F6D17.H</PathWithFilename>
+    <PathWithFilename>D:\git project\MG82F6D17\CODE\INCLUDE\API_UART_BRGRL_MG82F6D17.H</PathWithFilename>
     <TopLine>1567</TopLine>
     <CurrentLine>1567</CurrentLine>
     <Constant>0</Constant>
@@ -1605,9 +1605,9 @@
         </Doc>
         <Doc>
           <Name>..\code\MAIN.C</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>438</TopLine>
-          <CurrentLine>438</CurrentLine>
+          <ColumnNumber>22</ColumnNumber>
+          <TopLine>412</TopLine>
+          <CurrentLine>412</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

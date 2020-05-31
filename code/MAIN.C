@@ -39,7 +39,7 @@ Selection:
 	29491200,32000000,
 	44236800,48000000
 *************************************************/
-#define MCU_SYSCLK		32000000
+#define MCU_SYSCLK		12000000//32000000
 /*************************************************/
 /*************************************************
 set CpuClk (MAX.36MHz)
@@ -366,7 +366,7 @@ void InitUart1(void)
 	UART1_SetS1BRGSelSYSCLK();								// S1BRG clock source£ºSYSCLK
 
 	// Sets B.R. value
-	UART1_SetS1BRGValue(S1BRG_BRGRL_9600_2X_32000000_1T);	
+	UART1_SetS1BRGValue(S1BRG_BRGRL_9600_2X_12000000_1T);	
 }
 
 void Uart1SendByte(u8 tByte)
@@ -422,7 +422,7 @@ do
 while((TI1 == 0) && (--usTimeOut != 0));
 
 // Enable Serial Port IRQ
-INT_EnUART1();//ES = _ENABLE;
+ INT_EnUART1();//ES = _ENABLE;
 
 //return ((TI != 0) && (usTimeOut != 0)) ? _TRUE : _FALSE;
 
@@ -567,6 +567,7 @@ void InitPort(void)
 	PORT_SetP1PushPull(BIT6|BIT7);						// set P17(CEX4) as push-pull for PWM output
 	//PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
 	PORT_SetP3QuasiBi(BIT0|BIT1|BIT3|BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
+	PORT_SetP1PushPull(BIT0|BIT1);	
 
 	PORT_SetP6PushPull(BIT0|BIT1);					// set P60(PWM6),P61(PWM7) as push-pull for PWM output
 }
@@ -581,7 +582,7 @@ Output:
 void InitPCA_PWM(void)
 {
 	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
-	
+	PCA_SetCLOCK_SYSCLKdiv12();
 	PCA_CH0_SetMode_PWM();
 	//PCA_CH1_SetMode_PWM();
 	PCA_CH2_SetMode_PWM();
@@ -668,7 +669,9 @@ void InitClock(void)
 #if (MCU_SYSCLK==12000000)
 #if (MCU_CPUCLK==MCU_SYSCLK)
 	// SysClk=12MHz CpuClk=12MHz
-	CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
+	//CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
+CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
+
 	
 #else
 	// SysClk=12MHz CpuClk=6MHz
