@@ -3,31 +3,77 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-D:\git project\MG82F6D17\Keil4Prj\MG82F6D17_PCA_PWM_INT_16bit.uvproj
-Project File Date:  05/30/2020
+C:\Users\kuo\Desktop\git project\MG82F6D17\Keil4Prj\MG82F6D17_PCA_PWM_INT_16bit.uvproj
+Project File Date:  06/01/2020
 
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling MAIN.C...
 linking...
-Program Size: data=85.1 xdata=32 code=2603
+Program Size: data=85.2 xdata=32 code=2509
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(136): warning C206: 'Uart1SendByte': missing function-prototype
+..\CODE\MAIN.C(136): error C267: 'Uart1SendByte': requires ANSI-style prototype
+..\CODE\MAIN.C(380): error C231: 'Uart1SendByte': redefinition
+..\CODE\MAIN.C(447): error C231: 'Uart1SendByte': redefinition
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UART1SENDSTR?MAIN
+Program Size: data=101.2 xdata=32 code=3498
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=98.2 xdata=32 code=3463
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 compiling MAIN.C...
 linking...
-Program Size: data=85.1 xdata=32 code=2551
+Program Size: data=85.2 xdata=32 code=2503
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 compiling MAIN.C...
 linking...
-Program Size: data=85.1 xdata=32 code=2551
+Program Size: data=85.2 xdata=32 code=2516
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: data=85.2 xdata=32 code=2516
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 compiling MAIN.C...
+..\CODE\MAIN.C(158): error C202: 'para': undefined identifier
+..\CODE\MAIN.C(159): error C202: 'commands': undefined identifier
+..\CODE\MAIN.C(162): error C202: 'commands': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(159): error C202: 'commands': undefined identifier
+..\CODE\MAIN.C(162): error C202: 'commands': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(159): error C202: 'commands': undefined identifier
+..\CODE\MAIN.C(162): error C202: 'commands': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(163): error C202: 's_help': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
 linking...
-Program Size: data=85.1 xdata=32 code=2551
+Program Size: data=94.2 xdata=32 code=2607
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).

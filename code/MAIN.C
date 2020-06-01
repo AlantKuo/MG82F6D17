@@ -108,6 +108,7 @@ u8 LedTime;
 void s_pwm(char* para);
 void Uart1SendStr(u8* PStr);
 void DelayXus(u8 xUs);
+void s_help(char *params);
 
 
 
@@ -132,6 +133,7 @@ u8 gB_RcvStatus=RCV_EMPTY;
 u8 gB_dummy =0 ;
 
 
+
 void sendOK(void)
 {
 	Uart1SendStr("OK\r\n");	 
@@ -153,16 +155,30 @@ void s_pwm(char* para)
 
 }
 
+
 const struct command commands[] = {
 
 
   {"s_pwm", s_pwm, "s_pwm \r\n"},
 
+  {"help", s_help,"help:show function\r\n"},
 
    {NULL, NULL, NULL}
 	
 };
 
+
+void s_help(char *params)
+{
+	int i;
+	UNUSED(params);//= NULL;
+	for (i = 0; commands[i].name; i++)
+	{
+
+		Uart1SendStr(commands[i].syntax);
+
+	}
+}
 
 
 
@@ -319,7 +335,7 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 	*/
 	if(RI1)					
 	{
-		
+	 RI1 = 0;
 
 	  if ((gB_RcvStatus == RCV_EMPTY) && (Uart1RxIn < UART1_RX_BUFF_SIZE))  
 	  {
@@ -350,18 +366,40 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 	  }
 
 	  
-	  RI1 = 0;
+
 		
 	}
 	_pop_(SFRPI);		  
 }
+
+/***********************************************************************************
+Function:   	void INT_T0(void)
+Description:	T0 Interrupt handler
+Input:   
+Output:     
+*************************************************************************************/
+void INT_T0(void) interrupt INT_VECTOR_T0
+{
+	TH0=TIMER_12T_1ms_TH;
+	TL0=TIMER_12T_1ms_TL;
+
+	if(LedTime!=0) LedTime--;
+}
+
+/***********************************************************************************
+Function:		void Uart1SendByte(u8 tByte)
+Description:	Uart1 send byte
+Input:			u8 tByte: the data to be send
+Output:     
+*************************************************************************************/
+
 void InitUart1(void)
 {
 	UART1_SetMode8bitUARTVar();								// UART1 Mode: 8-bit, Variable B.R
 
 	UART1_EnS1BRG();										// Enable S1BRG
 	UART1_SetBaudRateX2();									// S1BRG x2
-    UART1_SetRxTxP10P11();	//UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
+    UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
 	UART1_EnReception();									// Enable reception
 	UART1_SetS1BRGSelSYSCLK();								// S1BRG clock source£ºSYSCLK
 
@@ -371,7 +409,8 @@ void InitUart1(void)
 
 void Uart1SendByte(u8 tByte)
 {
-#if 0
+#if 1
+/*
 	u8 i;
 	
 	if(bUart1TxFlag==FALSE)
@@ -399,6 +438,14 @@ void Uart1SendByte(u8 tByte)
 		Uart1TxIn=i;
 		INT_EnUART1();
 	}
+*/
+	bit bES0;
+	bES0=ES0;
+	ES0=0;
+	S0BUF=tByte;
+	while(TI0==0);
+	TI0=0;
+	ES0=bES0;
 #else
 
 WORD usTimeOut = 1800;
@@ -567,7 +614,7 @@ void InitPort(void)
 	PORT_SetP1PushPull(BIT6|BIT7);						// set P17(CEX4) as push-pull for PWM output
 	//PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
 	PORT_SetP3QuasiBi(BIT0|BIT1|BIT3|BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
-	PORT_SetP1PushPull(BIT0|BIT1);	
+	//PORT_SetP1PushPull(BIT0|BIT1);	
 
 	PORT_SetP6PushPull(BIT0|BIT1);					// set P60(PWM6),P61(PWM7) as push-pull for PWM output
 }
@@ -581,7 +628,7 @@ Output:
 *************************************************************************************/
 void InitPCA_PWM(void)
 {
-	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
+//	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
 	PCA_SetCLOCK_SYSCLKdiv12();
 	PCA_CH0_SetMode_PWM();
 	//PCA_CH1_SetMode_PWM();
@@ -669,8 +716,8 @@ void InitClock(void)
 #if (MCU_SYSCLK==12000000)
 #if (MCU_CPUCLK==MCU_SYSCLK)
 	// SysClk=12MHz CpuClk=12MHz
-	//CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
-CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
+	CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
+    //CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
 
 	
 #else
@@ -790,9 +837,9 @@ void main()
 	
     InitSystem();
 
-	LED_G_1=0;LED_R=0;
-	DelayXms(1000);
-	LED_G_1=1;LED_R=1;
+//	LED_G_1=0;LED_R=0;
+//	DelayXms(1000);
+//	LED_G_1=1;LED_R=1;
 	
 	INT_EnAll();						// Enable global interrupt
 
@@ -808,8 +855,8 @@ void main()
 
 #if 1
 	
-    	DelayXms(200);
-    	LED_G_1=!LED_G_1;
+    	//DelayXms(200);
+    	//LED_G_1=!LED_G_1;
     	x=0x01;
     	for(i=0;i<2;i++)
     	{
