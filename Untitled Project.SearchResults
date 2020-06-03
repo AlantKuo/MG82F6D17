@@ -1,35 +1,5 @@
----- ADCFG0 Matches (66 in 2 files) ----
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLK()				ADCFG0=ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLKDiv2()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLKDiv4()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLKDiv8()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS0|ADCKS1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLKDiv16()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS2)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_SYSCLKDiv32()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS0|ADCKS2)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_S0TOFDiv2()			ADCFG0=(ADCFG0&(~(ADCKS0|ADCKS1|ADCKS2)))|(ADCKS1|ADCKS2)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetClock_T2OFDiv2()				ADCFG0=ADCFG0|(ADCKS0|ADCKS1|ADCKS2)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN0()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN1()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN2()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN3()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS1|CHS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN4()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS2)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN5()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS2|CHS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN6()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS2|CHS1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AIN7()				ADCFG0=ADCFG0&(~ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS2|CHS1|CHS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_IVR14()				ADCFG0=ADCFG0|(ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetChannel_AVSS()				ADCFG0=ADCFG0|(ACHS);ADCON0=(ADCON0&(~(CHS3|CHS2|CHS1|CHS0)))|(CHS0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_SetADCS()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)));SFRPI=0;ADCFG0=ADCFG0&(~(ADTM0|ADTM1))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_T0Overflow()			SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)));SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_FreeRunning()			SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)));SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_S0BRGOverflow()			SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)));SFRPI=0;ADCFG0=ADCFG0|(ADTM0|ADTM1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_KBIET()					SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM2);SFRPI=0;ADCFG0=ADCFG0&(~(ADTM0|ADTM1))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_INT1ET()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM2);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_INT2ET()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM2);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_T2EXES()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM3);SFRPI=0;ADCFG0=ADCFG0&(~(ADTM0|ADTM1))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_T3EXES()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM3);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_PCA0Overflow()			SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM3|ADTM2);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_C0CMP6()				SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM3|ADTM2);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM0)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetMode_C0CMP6orC0CMP7()		SFRPI=4;ADCFG4=(ADCFG4&(~(ADTM3|ADTM2)))|(ADTM3|ADTM2);SFRPI=0;ADCFG0=(ADCFG0&(~(ADTM0|ADTM1)))|(ADTM1)
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetLeftJustified()				ADCFG0=ADCFG0&(~ADRJ)					
-API_Macro_MG82F6D17.H (code\include):#define ADC_SetRightJustified()				ADCFG0=ADCFG0|(ADRJ)					
-REG_MG82F6D17.h (code\include):sfr ADCFG0         = 0xC3;
-REG_MG82F6D17.h (code\include):// (bits in ADCFG0)
+---- WByteDef Matches (4 in 1 files) ----
+TYPE.h (code\include):}WByteDef;
+TYPE.h (code\include):}DWByteDef;
+TYPE.h (code\include):	WByteDef B;
+TYPE.h (code\include):	DWByteDef B;

@@ -56,8 +56,8 @@ set CpuClk (MAX.36MHz)
 #define TIMER_12T_1ms_TL	((65536-(u16)(float)(1000*((float)(MCU_SYSCLK)/(float)(12000000)))) %256)
 
 #define LED_G_0		P33
-#define LED_R		P34
-#define LED_G_1		P35
+//#define LED_R		P34
+//#define LED_G_1		P35
 
 
 #define PWM_MIN			(0*1)
@@ -150,7 +150,41 @@ void sendEmpty(void){
 
 void s_pwm(char* para)
 {
-	UNUSED(para);//= NULL;
+#if 0
+WordTypeDef duty;
+_push_(SFRPI);
+SFRPI=0;
+if(CF)
+{
+	//LED_R=!LED_R;
+	CF=0;
+	// Todo...
+	// ......
+	if(bDutyChange)
+	{
+		duty.W=PCA_C-wDuty[0].W;
+		PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
+		PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
+
+		duty.W=PCA_C-wDuty[1].W;
+		PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
+		PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
+		bDutyChange=FALSE;
+	}
+}
+_pop_(SFRPI);
+
+
+#endif
+	WordTypeDef duty;
+	int u32Para = atoi(para); //0 ~0xFFFF
+
+	duty.W = u32Para ;
+
+	PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
+	PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
+
+	//UNUSED(para);//= NULL;
     sendOK();
 
 }
@@ -372,19 +406,7 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 	_pop_(SFRPI);		  
 }
 
-/***********************************************************************************
-Function:   	void INT_T0(void)
-Description:	T0 Interrupt handler
-Input:   
-Output:     
-*************************************************************************************/
-void INT_T0(void) interrupt INT_VECTOR_T0
-{
-	TH0=TIMER_12T_1ms_TH;
-	TL0=TIMER_12T_1ms_TL;
 
-	if(LedTime!=0) LedTime--;
-}
 
 /***********************************************************************************
 Function:		void Uart1SendByte(u8 tByte)
@@ -406,6 +428,7 @@ void InitUart1(void)
 	// Sets B.R. value
 	UART1_SetS1BRGValue(S1BRG_BRGRL_9600_2X_12000000_1T);	
 }
+
 
 void Uart1SendByte(u8 tByte)
 {
@@ -439,13 +462,14 @@ void Uart1SendByte(u8 tByte)
 		INT_EnUART1();
 	}
 */
-	bit bES0;
-	bES0=ES0;
-	ES0=0;
-	S0BUF=tByte;
-	while(TI0==0);
-	TI0=0;
-	ES0=bES0;
+	//u8 x;
+		SFR_Page_(1);
+		S1BUF=tByte;
+		while(TI1==0);
+		TI1=0;
+		//x=S1BUF;
+		SFR_Page_(0);
+
 #else
 
 WORD usTimeOut = 1800;
@@ -512,7 +536,7 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 	SFRPI=0;
 	if(CF)
 	{
-		LED_R=!LED_R;
+		//LED_R=!LED_R;
 		CF=0;
 		// Todo...
 		// ......
@@ -521,9 +545,10 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 			duty.W=PCA_C-wDuty[0].W;
 			PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
 			PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
+
 			duty.W=PCA_C-wDuty[1].W;
 			PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
-				PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
+	    	PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
 			bDutyChange=FALSE;
 		}
 	}
@@ -628,8 +653,8 @@ Output:
 *************************************************************************************/
 void InitPCA_PWM(void)
 {
-//	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
-	PCA_SetCLOCK_SYSCLKdiv12();
+	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
+	//PCA_SetCLOCK_SYSCLKdiv12();
 	PCA_CH0_SetMode_PWM();
 	//PCA_CH1_SetMode_PWM();
 	PCA_CH2_SetMode_PWM();
@@ -690,7 +715,7 @@ void InitInterrupt(void)
 {
 	INT_EnUART1();						// Enable UART1 interrupt
 
-	INT_EnPCA();						// Enable PCA interrupt
+	//INT_EnPCA();						// Enable PCA interrupt
 }	
 
 
@@ -828,34 +853,35 @@ void InitSystem(void)
 	InitPCA_PWM();
 	InitInterrupt();
 
+	INT_EnAll();
 }
 
 
 void main()
 {
-	u8 i,x;
+	//u8 i,x;
 	
     InitSystem();
 
 //	LED_G_1=0;LED_R=0;
-//	DelayXms(1000);
+	DelayXms(1000);
 //	LED_G_1=1;LED_R=1;
 	
-	INT_EnAll();						// Enable global interrupt
+//	INT_EnAll();						// Enable global interrupt
 
 	Uart1SendStr("power on init ....\r\n");
 
-	wDuty[0].W=PWM_MIN;
-	wDuty[1].W=PWM_LOW;
-	DutyFlag=0x00;
+//	wDuty[0].W=PWM_MIN;
+//	wDuty[1].W=PWM_LOW;
+//	DutyFlag=0x00;
 
 	
 	while(1)
     {
 
-#if 1
+#if 0
 	
-    	//DelayXms(200);
+    	DelayXms(200);
     	//LED_G_1=!LED_G_1;
     	x=0x01;
     	for(i=0;i<2;i++)
@@ -884,7 +910,7 @@ void main()
 			x=x<<1;
     	}
     	bDutyChange=TRUE;
-//#else
+#else
 
    UartHandler();
 
