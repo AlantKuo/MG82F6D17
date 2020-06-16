@@ -130,6 +130,23 @@
           <Name>(98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(5011=-1,-1,-1,-1,0)(3003=-1,-1,-1,-1,0)(91=969,209,1169,474,1)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>700</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>MAIN.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -186,10 +203,10 @@
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>22</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>412</TopLine>
-      <CurrentLine>412</CurrentLine>
+      <TopLine>810</TopLine>
+      <CurrentLine>839</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\code\MAIN.C</PathWithFileName>
       <FilenameWithoutPath>MAIN.C</FilenameWithoutPath>
@@ -197,7 +214,7 @@
   </Group>
 
   <AlienFiles>
-    <PathWithFilename>D:\git project\MG82F6D17\CODE\INCLUDE\API_MACRO_MG82F6D17.H</PathWithFilename>
+    <PathWithFilename>C:\Users\kuo\Desktop\git project\MG82F6D17\CODE\INCLUDE\API_MACRO_MG82F6D17.H</PathWithFilename>
     <TopLine>1619</TopLine>
     <CurrentLine>1619</CurrentLine>
     <Constant>0</Constant>
@@ -223,9 +240,9 @@
   </AlienFiles>
 
   <AlienFiles>
-    <PathWithFilename>D:\git project\MG82F6D17\CODE\INCLUDE\API_UART_BRGRL_MG82F6D17.H</PathWithFilename>
-    <TopLine>1567</TopLine>
-    <CurrentLine>1567</CurrentLine>
+    <PathWithFilename>C:\Users\kuo\Desktop\git project\MG82F6D17\CODE\INCLUDE\API_UART_BRGRL_MG82F6D17.H</PathWithFilename>
+    <TopLine>167</TopLine>
+    <CurrentLine>205</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1593,9 +1610,9 @@
       <Documents>
         <Doc>
           <Name>..\CODE\.\INCLUDE\API_UART_BRGRL_MG82F6D17.H</Name>
-          <ColumnNumber>0</ColumnNumber>
-          <TopLine>1567</TopLine>
-          <CurrentLine>1567</CurrentLine>
+          <ColumnNumber>173</ColumnNumber>
+          <TopLine>167</TopLine>
+          <CurrentLine>205</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\CODE\.\INCLUDE\API_MACRO_MG82F6D17.H</Name>
@@ -1605,9 +1622,9 @@
         </Doc>
         <Doc>
           <Name>..\code\MAIN.C</Name>
-          <ColumnNumber>22</ColumnNumber>
-          <TopLine>412</TopLine>
-          <CurrentLine>412</CurrentLine>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>810</TopLine>
+          <CurrentLine>839</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

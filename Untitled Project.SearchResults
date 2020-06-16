@@ -1,5 +1,4 @@
----- WByteDef Matches (4 in 1 files) ----
-TYPE.h (code\include):}WByteDef;
-TYPE.h (code\include):}DWByteDef;
-TYPE.h (code\include):	WByteDef B;
-TYPE.h (code\include):	DWByteDef B;
+---- CHRL Matches (4 in 3 files) ----
+API_Macro_MG82F6D17.H (code\include):#define PCA_SetCounterReload(x)				CHRL=HIBYTE(x);CLRL=LOBYTE(x)
+Main.c (code):	CH = CHRL = (65536-30000)/256;		//  CH = CHRL = (65536-20)/256;																	
+REG_MG82F6D17.h (code\include):sfr CHRL           = 0xCF;

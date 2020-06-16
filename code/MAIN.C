@@ -100,6 +100,14 @@ u8 Uart1RxIn =0;
 
 u8 LedTime;
 
+u8 T0Cnt;
+u8 T0Duty;
+bit bT0DutyFlag;
+
+u8 T1Cnt;
+u8 T1Duty;
+bit bT1DutyFlag;
+
 //-------------------------------------------
 //
 //-------------------------------------------
@@ -407,7 +415,6 @@ void INT_UART1(void) interrupt INT_VECTOR_UART1
 }
 
 
-
 /***********************************************************************************
 Function:		void Uart1SendByte(u8 tByte)
 Description:	Uart1 send byte
@@ -421,7 +428,7 @@ void InitUart1(void)
 
 	UART1_EnS1BRG();										// Enable S1BRG
 	UART1_SetBaudRateX2();									// S1BRG x2
-    UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
+    UART1_SetRxTxP10P11();//UART1_SetRxTxP34P35();									// UART1 Pin£ºRX:P34 TX:P35
 	UART1_EnReception();									// Enable reception
 	UART1_SetS1BRGSelSYSCLK();								// S1BRG clock source£ºSYSCLK
 
@@ -529,6 +536,7 @@ Description:PCA Interrupt handler
 Input:   
 Output:     
 *************************************************************************************/
+
 void INT_PCA(void) interrupt INT_VECTOR_PCA
 {
 	WordTypeDef duty;
@@ -546,9 +554,9 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 			PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
 			PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
 
-			duty.W=PCA_C-wDuty[1].W;
-			PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
-	    	PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
+			//duty.W=PCA_C-wDuty[1].W;
+			//PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
+	    	//PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
 			bDutyChange=FALSE;
 		}
 	}
@@ -639,7 +647,8 @@ void InitPort(void)
 	PORT_SetP1PushPull(BIT6|BIT7);						// set P17(CEX4) as push-pull for PWM output
 	//PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
 	PORT_SetP3QuasiBi(BIT0|BIT1|BIT3|BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
-	//PORT_SetP1PushPull(BIT0|BIT1);	
+	PORT_SetP1PushPull(BIT0|BIT1);	
+//	PORT_SetP4PushPull(BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
 
 	PORT_SetP6PushPull(BIT0|BIT1);					// set P60(PWM6),P61(PWM7) as push-pull for PWM output
 }
@@ -651,10 +660,16 @@ Description:	Initialize PCA for PWM
 Input:   
 Output:   		
 *************************************************************************************/
+
 void InitPCA_PWM(void)
 {
-	PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
-	//PCA_SetCLOCK_SYSCLKdiv12();
+
+	unsigned short freq_tmp;
+
+	
+
+	//PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
+	PCA_SetCLOCK_MCKDO();
 	PCA_CH0_SetMode_PWM();
 	//PCA_CH1_SetMode_PWM();
 	PCA_CH2_SetMode_PWM();
@@ -669,8 +684,11 @@ void InitPCA_PWM(void)
 
 	PCA_SetPWM_EdgeAligned();			// Edge-aligned
 
-	PCA_SetCounter(PCA_C-PCA_RELOAD);
-	PCA_SetCounterReload(PCA_C-PCA_RELOAD);
+	//PCA_SetCounter(PCA_C-PCA_RELOAD);
+	//PCA_SetCounterReload(PCA_C-PCA_RELOAD);
+	freq_tmp = 3000000 / 240;
+	CH = CHRL = (65536-freq_tmp)/256;		//  CH = CHRL = (65536-20)/256;																	
+	CL = CLRL =(65536-freq_tmp)%256;		// CL = CLRL =(65536-20)%256; 
 
 	// Set PWM duty
 	PCA_CH0_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
@@ -715,7 +733,9 @@ void InitInterrupt(void)
 {
 	INT_EnUART1();						// Enable UART1 interrupt
 
-	//INT_EnPCA();						// Enable PCA interrupt
+	INT_EnPCA();						// Enable PCA interrupt
+		INT_EnTIMER0();
+	INT_EnTIMER1();
 }	
 
 
@@ -743,6 +763,9 @@ void InitClock(void)
 	// SysClk=12MHz CpuClk=12MHz
 	CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
     //CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
+	//ENABLE_CKM
+	//CMOD = CPS2 | CPS1 | CPS0 | BME0;		//MCKDO be clock source,MCKDO
+	//CCON = 0x00;	                    //clear flag & disable PCA counter
 
 	
 #else
@@ -838,7 +861,6 @@ void InitClock(void)
 
 
 
-
 /***********************************************************************************
 Function:       void InitSystem(void)
 Description:    Initialize MCU
@@ -852,6 +874,9 @@ void InitSystem(void)
 	InitUart1();//-----------
 	InitPCA_PWM();
 	InitInterrupt();
+	//InitTimer0_8bit_PWM();		
+	//InitTimer1_8bit_PWM();
+	//PCA_Init();
 
 	INT_EnAll();
 }
@@ -859,7 +884,7 @@ void InitSystem(void)
 
 void main()
 {
-	//u8 i,x;
+	u8 i,x;
 	
     InitSystem();
 
@@ -867,19 +892,19 @@ void main()
 	DelayXms(1000);
 //	LED_G_1=1;LED_R=1;
 	
-//	INT_EnAll();						// Enable global interrupt
+	//INT_EnAll();						// Enable global interrupt
 
 	Uart1SendStr("power on init ....\r\n");
 
-//	wDuty[0].W=PWM_MIN;
-//	wDuty[1].W=PWM_LOW;
-//	DutyFlag=0x00;
+	wDuty[0].W=PWM_MIN;
+	wDuty[1].W=PWM_LOW;
+	DutyFlag=0x00;
 
 	
 	while(1)
     {
 
-#if 0
+#if 1
 	
     	DelayXms(200);
     	//LED_G_1=!LED_G_1;
@@ -910,11 +935,13 @@ void main()
 			x=x<<1;
     	}
     	bDutyChange=TRUE;
-#else
+//#else
 
-   UartHandler();
+ 
 
 #endif
+	UartHandler();
+
     }
 }
 
