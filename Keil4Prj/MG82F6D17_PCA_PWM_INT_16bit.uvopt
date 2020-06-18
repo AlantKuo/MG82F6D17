@@ -205,8 +205,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>810</TopLine>
-      <CurrentLine>839</CurrentLine>
+      <TopLine>684</TopLine>
+      <CurrentLine>708</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\code\MAIN.C</PathWithFileName>
       <FilenameWithoutPath>MAIN.C</FilenameWithoutPath>
@@ -242,7 +242,7 @@
   <AlienFiles>
     <PathWithFilename>C:\Users\kuo\Desktop\git project\MG82F6D17\CODE\INCLUDE\API_UART_BRGRL_MG82F6D17.H</PathWithFilename>
     <TopLine>167</TopLine>
-    <CurrentLine>205</CurrentLine>
+    <CurrentLine>167</CurrentLine>
     <Constant>0</Constant>
     <WindowPosition>
       <length>0</length>
@@ -1612,7 +1612,7 @@
           <Name>..\CODE\.\INCLUDE\API_UART_BRGRL_MG82F6D17.H</Name>
           <ColumnNumber>173</ColumnNumber>
           <TopLine>167</TopLine>
-          <CurrentLine>205</CurrentLine>
+          <CurrentLine>167</CurrentLine>
         </Doc>
         <Doc>
           <Name>..\CODE\.\INCLUDE\API_MACRO_MG82F6D17.H</Name>
@@ -1623,8 +1623,8 @@
         <Doc>
           <Name>..\code\MAIN.C</Name>
           <ColumnNumber>0</ColumnNumber>
-          <TopLine>810</TopLine>
-          <CurrentLine>839</CurrentLine>
+          <TopLine>684</TopLine>
+          <CurrentLine>708</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>

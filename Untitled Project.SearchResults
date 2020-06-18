@@ -1,4 +1,3 @@
----- CHRL Matches (4 in 3 files) ----
-API_Macro_MG82F6D17.H (code\include):#define PCA_SetCounterReload(x)				CHRL=HIBYTE(x);CLRL=LOBYTE(x)
-Main.c (code):	CH = CHRL = (65536-30000)/256;		//  CH = CHRL = (65536-20)/256;																	
-REG_MG82F6D17.h (code\include):sfr CHRL           = 0xCF;
+---- CKCON3_P Matches (2 in 2 files) ----
+Main.c (code):CKCON3_P
+REG_MG82F6D17.h (code\include):#define CKCON3_P     0x41

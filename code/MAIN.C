@@ -81,39 +81,48 @@ set CpuClk (MAX.36MHz)
 
 
 
-idata WordTypeDef wDuty[2];
-bit bDutyChange;
-u8 DutyFlag;
+//idata WordTypeDef wDuty[2];
+bit bDutyChange =TRUE;
+//u8 DutyFlag;
+//u16 BacklightDuty=128;
+xdata u8 BacklightDuty1=128;
+xdata u8 BacklightDuty2=128;
+xdata u8 BacklightDuty3=128;
+xdata u8 BacklightDuty4=128;
 
+
+
+
+xdata u8 PWMFreq=0;
 
 
 #define UART1_RX_BUFF_SIZE   32   		
 //#define UART1_TX_BUFF_SIZE   32   	
-char acRecvBuf[UART1_RX_BUFF_SIZE]={0};
+xdata char acRecvBuf[UART1_RX_BUFF_SIZE]={0};
 xdata u8 RcvBuf[UART1_RX_BUFF_SIZE];
-u8 Uart1RxIn =0;
+xdata u8 Uart1RxIn =0;
 //u8 Uart1RxOut =0;
 //xdata u8 TxBuf[UART1_TX_BUFF_SIZE];
 //u8 Uart1TxIn =0;
 //u8 Uart1TxOut =0;
 //bit bUart1TxFlag=0;
 
-u8 LedTime;
+//u8 LedTime;
 
-u8 T0Cnt;
-u8 T0Duty;
-bit bT0DutyFlag;
+//u8 T0Cnt;
+//u8 T0Duty;
+//bit bT0DutyFlag;
 
-u8 T1Cnt;
-u8 T1Duty;
-bit bT1DutyFlag;
+//u8 T1Cnt;
+//u8 T1Duty;
+//bit bT1DutyFlag;
 
 //-------------------------------------------
 //
 //-------------------------------------------
 
 
-void s_pwm(char* para);
+//void s_pwm(char* para);
 void Uart1SendStr(u8* PStr);
 void DelayXus(u8 xUs);
 void s_help(char *params);
@@ -156,52 +165,58 @@ void sendEmpty(void){
 
 }
 
-void s_pwm(char* para)
+void s_duty1(char* para) // 0~100
 {
-#if 0
-WordTypeDef duty;
-_push_(SFRPI);
-SFRPI=0;
-if(CF)
-{
-	//LED_R=!LED_R;
-	CF=0;
-	// Todo...
-	// ......
-	if(bDutyChange)
-	{
-		duty.W=PCA_C-wDuty[0].W;
-		PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
-		PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
 
-		duty.W=PCA_C-wDuty[1].W;
-		PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
-		PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
-		bDutyChange=FALSE;
-	}
-}
-_pop_(SFRPI);
-
-
-#endif
-	WordTypeDef duty;
-	int u32Para = atoi(para); //0 ~0xFFFF
-
-	duty.W = u32Para ;
-
-	PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
-	PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
-
-	//UNUSED(para);//= NULL;
+	BacklightDuty1 = atoi(para); //0 ~0xFFFF
+	bDutyChange =TRUE;
     sendOK();
 
+}
+void s_duty2(char* para) // 0~100
+{
+
+	BacklightDuty2 = atoi(para); //0 ~0xFFFF
+	bDutyChange =TRUE;
+    sendOK();
+
+}
+void s_duty3(char* para) // 0~100
+{
+
+	BacklightDuty3 = atoi(para); //0 ~0xFFFF
+	bDutyChange =TRUE;
+    sendOK();
+
+}
+void s_duty4(char* para) // 0~100
+{
+
+	BacklightDuty4 = atoi(para); //0 ~0xFFFF
+	bDutyChange =TRUE;
+    sendOK();
+
+}
+
+
+
+void s_freq(char*  para) // 240 hz
+{
+	//u32 freq;
+	PWMFreq = atoi(para);
+	bDutyChange =TRUE;
+	sendOK();
 }
 
 
 const struct command commands[] = {
 
 
-  {"s_pwm", s_pwm, "s_pwm \r\n"},
+  {"s_duty1", s_duty1, "s_duty1 0~255\r\n"},
+  {"s_duty2", s_duty2, "s_duty2 0~255\r\n"},
+  {"s_duty3", s_duty3, "s_duty3 0~255\r\n"},//p60
+  {"s_duty4", s_duty4, "s_duty4 0~255\r\n"},//p61
+  {"s_freq", s_freq, "s_freq \r\n"},
 
   {"help", s_help,"help:show function\r\n"},
 
@@ -539,7 +554,8 @@ Output:
 
 void INT_PCA(void) interrupt INT_VECTOR_PCA
 {
-	WordTypeDef duty;
+	//WordTypeDef duty;
+	
 	_push_(SFRPI);
 	SFRPI=0;
 	if(CF)
@@ -550,13 +566,16 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 		// ......
 		if(bDutyChange)
 		{
-			duty.W=PCA_C-wDuty[0].W;
-			PCA_CH0_SetValue(duty.B.BHigh,duty.B.BLow);
-			PCA_CH2_SetValue(duty.B.BHigh,duty.B.BLow); //add
+			PCA_CH0_SetValue(PCA_CH(BacklightDuty1 * 256),PCA_CL(BacklightDuty1 * 256));
+			PCA_CH2_SetValue(PCA_CH(BacklightDuty2 * 256),PCA_CL(BacklightDuty2 * 256));
+			PCA_CH6_SetValue(PCA_CH(BacklightDuty3 * 256),PCA_CL(BacklightDuty3 * 256));
+			PCA_CH7_SetValue(PCA_CH(BacklightDuty4 * 256),PCA_CL(BacklightDuty4 * 256));
+			CH = CHRL = PCA_CH(PWMFreq * 256);		//	CH = CHRL = (65536-20)/256; 																
+			CL = CLRL = PCA_CL(PWMFreq * 256);			// CL = CLRL =(65536-20)%256; 
 
-			//duty.W=PCA_C-wDuty[1].W;
-			//PCA_CH1_SetValue(duty.B.BHigh,duty.B.BLow);
-	    	//PCA_CH3_SetValue(duty.B.BHigh,duty.B.BLow);//add
+		  //  PCA_SetCounter(PWMFreq);
+	      //  PCA_SetCounterReload(PWMFreq);
+	
 			bDutyChange=FALSE;
 		}
 	}
@@ -649,6 +668,8 @@ void InitPort(void)
 	PORT_SetP3QuasiBi(BIT0|BIT1|BIT3|BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
 	PORT_SetP1PushPull(BIT0|BIT1);	
 //	PORT_SetP4PushPull(BIT4|BIT5);		// set P30,P31,P33,P34,P35 as Quasi-Bidirectional
+	PORT_SetP2PushPull(BIT2|BIT4);					// set P22(CEX0),P24(CEX2) as push-pull for PWM output
+
 
 	PORT_SetP6PushPull(BIT0|BIT1);					// set P60(PWM6),P61(PWM7) as push-pull for PWM output
 }
@@ -664,31 +685,39 @@ Output:
 void InitPCA_PWM(void)
 {
 
-	unsigned short freq_tmp;
+//	u32 freq_tmp;
 
 	
 
 	//PCA_SetCLOCK_SYSCLK();			// PCA clock: SysClk
 	PCA_SetCLOCK_MCKDO();
+	//CMOD = CPS2 | CPS1 | CPS0 | BME0;		//MCKDO be clock source,MCKDO
+	//CCON = 0x00;	                    								//clear flag & disable PCA counter
+
+
 	PCA_CH0_SetMode_PWM();
 	//PCA_CH1_SetMode_PWM();
 	PCA_CH2_SetMode_PWM();
-	//PCA_CH3_SetMode_PWM();
+	PCA_CH6_SetMode_PWM();
+	PCA_CH7_SetMode_PWM();
+	
 
-	PCA_CH0_SetPWM_16Bit();
-	//PCA_CH1_SetPWM_16Bit();
+	PCA_CH0_SetPWM_16Bit();	
 	PCA_CH2_SetPWM_16Bit();
-	//PCA_CH3_SetPWM_16Bit();
+	PCA_CH6_SetPWM_16Bit();
+	PCA_CH7_SetPWM_16Bit();
+
 
 
 
 	PCA_SetPWM_EdgeAligned();			// Edge-aligned
 
-	//PCA_SetCounter(PCA_C-PCA_RELOAD);
-	//PCA_SetCounterReload(PCA_C-PCA_RELOAD);
-	freq_tmp = 3000000 / 240;
-	CH = CHRL = (65536-freq_tmp)/256;		//  CH = CHRL = (65536-20)/256;																	
-	CL = CLRL =(65536-freq_tmp)%256;		// CL = CLRL =(65536-20)%256; 
+	//PCA_SetCounter(PWMFreq);
+	//PCA_SetCounterReload(PWMFreq);
+	
+	CH = CHRL = PCA_CH(PWMFreq);		//	CH = CHRL = (65536-20)/256; 																
+	CL = CLRL = PCA_CL(PWMFreq);			// CL = CLRL =(65536-20)%256; 
+
 
 	// Set PWM duty
 	PCA_CH0_SetValue(PCA_CH(PWM_MIN),PCA_CL(PWM_MIN));
@@ -700,18 +729,27 @@ void InitPCA_PWM(void)
 	//PCA_SetPWM0_EnOutput();					
 	//PCA_SetPWM1_EnOutput();
 
-	//PCA_SetCEX0CEX2CEX4_P22P24P17();	// Set CEX0:P22,CEX2:P24,CEX4:P17
+	PCA_SetCEX0CEX2CEX4_P22P24P17();	// Set CEX0:P22,CEX2:P24,CEX4:P17
 	//PCA_SetPWM6PWM7_P60P61();			// Set PWM6:P60,PWM7:P61
-	PCA_SetPWM0APWM0B_P16P17();
-	PCA_SetPWM2APWM2B_P60P61();			// set PWM2A:P60,PWM2B:P61
+//	PCA_SetPWM0APWM0B_P16P17();
+//	PCA_SetPWM2APWM2B_P60P61();			// set PWM2A:P60,PWM2B:P61
+    PCA_SetPWM6PWM7_P60P61();
 
-	PCA_SetPWM2_DisOutput();			// disable PWM2 output
-	PCA_SetPWM2_2nd_EnOutput();			// enable PWM2A output
-	PCA_SetPWM2_3rd_EnOutput();			// enable PWM2B output
 
-	PCA_SetPWM0_DisOutput();
-	PCA_SetPWM0_2nd_EnOutput();
-	PCA_SetPWM0_3rd_EnOutput();
+
+//	PCA_SetPWM2_DisOutput();			// disable PWM2 output
+//	PCA_SetPWM2_2nd_EnOutput();			// enable PWM2A output
+//	PCA_SetPWM2_3rd_EnOutput();			// enable PWM2B output
+
+//	PCA_SetPWM0_DisOutput();
+//	PCA_SetPWM0_2nd_EnOutput();
+//	PCA_SetPWM0_3rd_EnOutput();
+	PCA_SetPWM2_EnOutput();
+	PCA_SetPWM0_EnOutput();
+
+
+	PCA_SetPWM6_EnOutput();
+	PCA_SetPWM7_EnOutput();
 
 	PCA_CF_EnInterrupt();				// Enable PCA CF interrupt
 
@@ -734,8 +772,8 @@ void InitInterrupt(void)
 	INT_EnUART1();						// Enable UART1 interrupt
 
 	INT_EnPCA();						// Enable PCA interrupt
-		INT_EnTIMER0();
-	INT_EnTIMER1();
+	//	INT_EnTIMER0();
+	//INT_EnTIMER1();
 }	
 
 
@@ -761,11 +799,11 @@ void InitClock(void)
 #if (MCU_SYSCLK==12000000)
 #if (MCU_CPUCLK==MCU_SYSCLK)
 	// SysClk=12MHz CpuClk=12MHz
-	CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
+	//CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
     //CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
-	//ENABLE_CKM
-	//CMOD = CPS2 | CPS1 | CPS0 | BME0;		//MCKDO be clock source,MCKDO
-	//CCON = 0x00;	                    //clear flag & disable PCA counter
+    CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1|ENABLE_CKM|CKM_OSCIN_DIV_2);
+	CLK_SetCKCON3(0x08);
+
 
 	
 #else
@@ -884,27 +922,28 @@ void InitSystem(void)
 
 void main()
 {
-	u8 i,x;
+	//u8 i,x;
 	
     InitSystem();
 
 //	LED_G_1=0;LED_R=0;
-	DelayXms(1000);
+	DelayXms(100);
 //	LED_G_1=1;LED_R=1;
 	
 	//INT_EnAll();						// Enable global interrupt
 
 	Uart1SendStr("power on init ....\r\n");
+	bDutyChange=TRUE;
 
-	wDuty[0].W=PWM_MIN;
-	wDuty[1].W=PWM_LOW;
-	DutyFlag=0x00;
+	//wDuty[0].W=PWM_MIN;
+	//wDuty[1].W=PWM_LOW;
+	//DutyFlag=0x00;
 
 	
 	while(1)
     {
 
-#if 1
+#if 0
 	
     	DelayXms(200);
     	//LED_G_1=!LED_G_1;

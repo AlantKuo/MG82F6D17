@@ -10,12 +10,318 @@ Project File Date:  06/08/2020
 Build target 'Target 1'
 compiling MAIN.C...
 linking...
-Program Size: data=96.4 xdata=32 code=2656
+Program Size: data=98.4 xdata=32 code=3142
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 compiling MAIN.C...
 linking...
-Program Size: data=98.4 xdata=32 code=3139
+Program Size: data=98.4 xdata=32 code=3142
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_S_FREQ?MAIN
+Program Size: data=111.4 xdata=32 code=3250
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=107.4 xdata=32 code=3250
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(910): warning C280: 'i': unreferenced local variable
+..\CODE\MAIN.C(910): warning C280: 'x': unreferenced local variable
+linking...
+Program Size: data=106.4 xdata=32 code=3055
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=104.4 xdata=32 code=3055
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=104.4 xdata=32 code=3380
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=99.2 xdata=32 code=3380
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=99.2 xdata=32 code=3348
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=99.2 xdata=32 code=3342
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=99.2 xdata=32 code=3338
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=99.2 xdata=32 code=3338
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=100.2 xdata=32 code=3326
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=100.2 xdata=32 code=3355
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=100.2 xdata=32 code=3337
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(206): warning C280: 'freq': unreferenced local variable
+linking...
+Program Size: data=104.2 xdata=32 code=3357
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=104.2 xdata=32 code=3357
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=104.2 xdata=32 code=3354
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=104.2 xdata=32 code=3351
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+..\CODE\MAIN.C(693): warning C280: 'freq_tmp': unreferenced local variable
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?MAIN
+    LENGTH:  0067H
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  ACRECVBUF
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY4
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY3
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY2
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY1
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  COMMANDS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  UART1RXIN
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_RCVSTATUS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_DUMMY
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  PWMFREQ
+    SEGMENT: ?DT?MAIN
+Program Size: data=137.2 xdata=32 code=3902
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?MAIN
+    LENGTH:  0067H
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  ACRECVBUF
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY4
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY3
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY2
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY1
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  COMMANDS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  UART1RXIN
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_RCVSTATUS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_DUMMY
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  PWMFREQ
+    SEGMENT: ?DT?MAIN
+Program Size: data=137.2 xdata=32 code=3902
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?MAIN
+    LENGTH:  0067H
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  ACRECVBUF
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY4
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY3
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY2
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY1
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  COMMANDS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  UART1RXIN
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_RCVSTATUS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_DUMMY
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  PWMFREQ
+    SEGMENT: ?DT?MAIN
+Program Size: data=127.2 xdata=32 code=3799
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?MAIN
+    LENGTH:  0067H
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  ACRECVBUF
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY4
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY3
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY2
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  BACKLIGHTDUTY1
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  COMMANDS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  UART1RXIN
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_RCVSTATUS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_DUMMY
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  PWMFREQ
+    SEGMENT: ?DT?MAIN
+Program Size: data=127.2 xdata=32 code=3799
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?MAIN
+    LENGTH:  0062H
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  ACRECVBUF
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  COMMANDS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  UART1RXIN
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_RCVSTATUS
+    SEGMENT: ?DT?MAIN
+*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
+    SYMBOL:  GB_DUMMY
+    SEGMENT: ?DT?MAIN
+Program Size: data=122.2 xdata=37 code=3858
+Target not created
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=90.2 xdata=69 code=3860
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=89.2 xdata=70 code=3876
+creating hex file from ".\OBJ\MG82F6D17_DEMO"...
+".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling MAIN.C...
+linking...
+Program Size: data=89.2 xdata=70 code=3902
 creating hex file from ".\OBJ\MG82F6D17_DEMO"...
 ".\OBJ\MG82F6D17_DEMO" - 0 Error(s), 0 Warning(s).
