@@ -1,3 +1,4 @@
----- CKCON3_P Matches (2 in 2 files) ----
-Main.c (code):CKCON3_P
-REG_MG82F6D17.h (code\include):#define CKCON3_P     0x41
+---- _push_ Matches (3 in 2 files) ----
+Main.c (code):	_push_(SFRPI);		   
+Main.c (code):	_push_(SFRPI);
+TYPE.h (code\include):#define push(x)		_push_(x)

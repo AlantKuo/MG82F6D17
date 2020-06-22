@@ -75,6 +75,7 @@ set CpuClk (MAX.36MHz)
 #define PCA_CL(x)		(u8)((65536-(x))%256) 
 #define PCA_CH(x)     	(u8)((65536-(x))/256)          
 
+
 #define SFR_Page_(x)		SFRPI = x;
 
 #define UNUSED(var) (void)((var) = (var))
@@ -85,18 +86,15 @@ set CpuClk (MAX.36MHz)
 bit bDutyChange =TRUE;
 //u8 DutyFlag;
 //u16 BacklightDuty=128;
-xdata u8 BacklightDuty1=128;
-xdata u8 BacklightDuty2=128;
-xdata u8 BacklightDuty3=128;
-xdata u8 BacklightDuty4=128;
+xdata u8 BacklightDuty1=50;
+xdata u8 BacklightDuty2=50;
+xdata u8 BacklightDuty3=50;
+xdata u8 BacklightDuty4=50;
+
+//xdata u8 PWMFreq=0;
 
 
-
-
-xdata u8 PWMFreq=0;
-
-
-#define UART1_RX_BUFF_SIZE   32   		
+#define UART1_RX_BUFF_SIZE   24   		
 //#define UART1_TX_BUFF_SIZE   32   	
 xdata char acRecvBuf[UART1_RX_BUFF_SIZE]={0};
 xdata u8 RcvBuf[UART1_RX_BUFF_SIZE];
@@ -202,9 +200,11 @@ void s_duty4(char* para) // 0~100
 
 void s_freq(char*  para) // 240 hz
 {
+	UNUSED(para);
+
 	//u32 freq;
-	PWMFreq = atoi(para);
-	bDutyChange =TRUE;
+	//PWMFreq = atoi(para);
+	//bDutyChange =TRUE;
 	sendOK();
 }
 
@@ -212,10 +212,10 @@ void s_freq(char*  para) // 240 hz
 const struct command commands[] = {
 
 
-  {"s_duty1", s_duty1, "s_duty1 0~255\r\n"},
-  {"s_duty2", s_duty2, "s_duty2 0~255\r\n"},
-  {"s_duty3", s_duty3, "s_duty3 0~255\r\n"},//p60
-  {"s_duty4", s_duty4, "s_duty4 0~255\r\n"},//p61
+  {"s_duty1", s_duty1, "s_duty1 0~100\r\n"},
+  {"s_duty2", s_duty2, "s_duty2 0~100\r\n"},
+  {"s_duty3", s_duty3, "s_duty3 0~100\r\n"},//p60
+  {"s_duty4", s_duty4, "s_duty4 0~100\r\n"},//p61
   {"s_freq", s_freq, "s_freq \r\n"},
 
   {"help", s_help,"help:show function\r\n"},
@@ -551,7 +551,7 @@ Description:PCA Interrupt handler
 Input:   
 Output:     
 *************************************************************************************/
-
+#define STEP (65536/100)
 void INT_PCA(void) interrupt INT_VECTOR_PCA
 {
 	//WordTypeDef duty;
@@ -566,12 +566,12 @@ void INT_PCA(void) interrupt INT_VECTOR_PCA
 		// ......
 		if(bDutyChange)
 		{
-			PCA_CH0_SetValue(PCA_CH(BacklightDuty1 * 256),PCA_CL(BacklightDuty1 * 256));
-			PCA_CH2_SetValue(PCA_CH(BacklightDuty2 * 256),PCA_CL(BacklightDuty2 * 256));
-			PCA_CH6_SetValue(PCA_CH(BacklightDuty3 * 256),PCA_CL(BacklightDuty3 * 256));
-			PCA_CH7_SetValue(PCA_CH(BacklightDuty4 * 256),PCA_CL(BacklightDuty4 * 256));
-			CH = CHRL = PCA_CH(PWMFreq * 256);		//	CH = CHRL = (65536-20)/256; 																
-			CL = CLRL = PCA_CL(PWMFreq * 256);			// CL = CLRL =(65536-20)%256; 
+			PCA_CH0_SetValue(PCA_CH(BacklightDuty1*STEP),PCA_CL(BacklightDuty1 * STEP));
+			PCA_CH2_SetValue(PCA_CH(BacklightDuty2 * STEP),PCA_CL(BacklightDuty2 * STEP));
+			PCA_CH6_SetValue(PCA_CH(BacklightDuty3 * STEP),PCA_CL(BacklightDuty3 * STEP));
+			PCA_CH7_SetValue(PCA_CH(BacklightDuty4 * STEP),PCA_CL(BacklightDuty4 * STEP));
+			CH = CHRL = PCA_CH(0);		//	CH = CHRL = (65536-20)/256; 																
+			CL = CLRL = PCA_CL(0);			// CL = CLRL =(65536-20)%256; 
 
 		  //  PCA_SetCounter(PWMFreq);
 	      //  PCA_SetCounterReload(PWMFreq);
@@ -715,8 +715,8 @@ void InitPCA_PWM(void)
 	//PCA_SetCounter(PWMFreq);
 	//PCA_SetCounterReload(PWMFreq);
 	
-	CH = CHRL = PCA_CH(PWMFreq);		//	CH = CHRL = (65536-20)/256; 																
-	CL = CLRL = PCA_CL(PWMFreq);			// CL = CLRL =(65536-20)%256; 
+	CH = CHRL = PCA_CH(0);		//	CH = CHRL = (65536-20)/256; 																
+	CL = CLRL = PCA_CL(0);			// CL = CLRL =(65536-20)%256; 
 
 
 	// Set PWM duty
@@ -802,7 +802,7 @@ void InitClock(void)
 	//CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1);
     //CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_4);
     CLK_SetCKCON0(IHRCO_12MHz|CPUCLK_SYSCLK_DIV_1|SYSCLK_MCKDO_DIV_1|ENABLE_CKM|CKM_OSCIN_DIV_2);
-	CLK_SetCKCON3(0x08);
+	//CLK_SetCKCON3(0x08);
 
 
 	
