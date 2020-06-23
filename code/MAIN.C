@@ -212,10 +212,10 @@ void s_freq(char*  para) // 240 hz
 const struct command commands[] = {
 
 
-  {"s_duty1", s_duty1, "s_duty1 0~100\r\n"},
-  {"s_duty2", s_duty2, "s_duty2 0~100\r\n"},
-  {"s_duty3", s_duty3, "s_duty3 0~100\r\n"},//p60
-  {"s_duty4", s_duty4, "s_duty4 0~100\r\n"},//p61
+  {"s_duty1", s_duty1, "s_duty1 0~255\r\n"},
+  {"s_duty2", s_duty2, "s_duty2 0~255\r\n"},
+  {"s_duty3", s_duty3, "s_duty3 0~255\r\n"},//p60
+  {"s_duty4", s_duty4, "s_duty4 0~255\r\n"},//p61
   {"s_freq", s_freq, "s_freq \r\n"},
 
   {"help", s_help,"help:show function\r\n"},
@@ -551,7 +551,7 @@ Description:PCA Interrupt handler
 Input:   
 Output:     
 *************************************************************************************/
-#define STEP (65536/100)
+#define STEP (65536/255)
 void INT_PCA(void) interrupt INT_VECTOR_PCA
 {
 	//WordTypeDef duty;
@@ -717,6 +717,10 @@ void InitPCA_PWM(void)
 	
 	CH = CHRL = PCA_CH(0);		//	CH = CHRL = (65536-20)/256; 																
 	CL = CLRL = PCA_CL(0);			// CL = CLRL =(65536-20)%256; 
+
+    // 12000000 /65536 =183 Hz
+	//產生一個由TIMx_ARR暫存器決定頻率：PWM Frequency = counter clock / (auto reload value(TIMx_ARR)+1)
+	//由TIMx_CCRx暫存器決定工作週期的PWM信號：PWM Duty Cycle = compare reg. value(TIMx_CCRx)*100 / (auto reload value(TIMx_ARR)+1)
 
 
 	// Set PWM duty
